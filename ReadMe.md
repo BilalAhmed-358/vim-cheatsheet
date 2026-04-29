@@ -11,75 +11,112 @@
 | `:q!` | Quit without saving |
 | `ZZ` | Save (if modified) and exit |
 | `:w <filename>` | Save a copy as filename |
+| `:e filename` | Open a file |
+| `:sp filename` | Open file in a horizontal split |
+| `:vsp filename` | Open file in a vertical split |
 
 ## Modes
 
 | Command | Description |
 |---------|-------------|
 | `Esc` | Normal mode. Default starting mode. |
-| `i` | Insert mode. Esc to normal mode. |
+| `i` | Insert mode before cursor. Esc to normal mode. |
+| `a` | Insert mode after cursor. Esc to normal mode. |
 | `v` | Visual mode. Esc to normal mode. |
+| `V` | Visual Line mode. Esc to normal mode. |
 | `:` | Command-line mode. Esc to normal mode. |
 
 ## Getting Around
 
 | Command | Description |
 |---------|-------------|
-| Arrow keys | Move around (or `h`,`j`,`k`,`l` — left, down, up, right) |
-| `$` | End of line |
-| `0` | Beginning of line (this is a 'zero', not an 'o') |
-| `Ctrl + u` | Half-page up |
-| `Ctrl + d` | Half-page down |
-| `b` | Backwards a word |
+| `h` `j` `k` `l` | Left, Down, Up, Right |
 | `w` | Forward a word |
+| `b` | Backwards a word |
+| `e` | Jump to end of word |
+| `0` | Beginning of line |
+| `$` | End of line |
+| `gg` | Top of file |
 | `G` | Bottom of file |
-| `gg` | Top of file (or `1G`) |
-| `:set number` | Display line numbering |
-| `:set nonumber` | Hide line numbering |
-| `:5` | Go to line 5 |
+| `:{n}` or `{n}G` | Jump to line number n (e.g. `:42` or `42G`) |
+| `Ctrl+d` | Half-page down |
+| `Ctrl+u` | Half-page up |
+| `%` | Jump to matching bracket |
+
+## Line Numbers
+
+| Command | Description |
+|---------|-------------|
+| `:set number` | Show absolute line numbers |
+| `:set relativenumber` | Show relative line numbers |
+| `:set number relativenumber` | Show absolute on current line, relative elsewhere |
+| `:set nonumber` | Hide line numbers |
+| `:set norelativenumber` | Hide relative line numbers |
+
+To persist line numbers, add to `~/.vimrc`:
+```
+set number
+set relativenumber
+```
 
 ## Making Changes
 
 | Command | Description |
 |---------|-------------|
-| `i` | Insert mode. Esc to normal mode. |
+| `i` | Insert mode before cursor |
+| `a` | Insert mode after cursor |
 | `o` | Insert new line below |
 | `O` | Insert new line above |
 | `I` | Insert at beginning of line |
 | `A` | Insert (append) at end of line |
-| `x` | Delete character |
+| `x` | Delete character under cursor |
 | `dd` | Delete line |
 | `2dd` | Delete two lines |
+| `dw` | Delete word |
+| `d$` | Delete to end of line |
 | `5x` | Delete 5 characters |
 | `dG` | Delete from cursor to end of file |
-| `d$` | Delete from cursor to end of line |
 | `dgg` | Delete from cursor to beginning of file |
 | `yy` | Yank (copy) a line |
+| `yw` | Copy word |
+| `p` | Paste after cursor |
+| `P` | Paste before cursor |
+| `u` | Undo |
+| `Ctrl+r` | Redo |
+| `ciw` | Change inner word (delete word and enter Insert mode) |
+| `ci"` | Change inside quotes |
+| `>>` | Indent line |
+| `<<` | Unindent line |
+| `.` | Repeat last change |
 
 ## Selecting Text
 
 | Command | Description |
 |---------|-------------|
-| `v` | Enter Visual mode |
+| `v` | Character-wise selection |
+| `V` | Line-wise selection |
+| `Ctrl+v` | Block selection |
 | Arrow keys | Highlight text in Visual mode |
 | `y` | Yank (copy) selection |
 | `c` | Change (cut) selection |
 | `d` | Delete selection |
-| `p` | Paste selection. Esc to enter normal mode to paste. |
-| `Esc` | Enter normal mode |
+| `p` | Paste selection |
+| `>` | Indent selection |
+| `<` | Unindent selection |
+| `Esc` | Return to Normal mode |
 
 ## Search, Replace & Undo
 
 | Command | Description |
 |---------|-------------|
-| `u` | Undo (from normal mode) |
-| `Ctrl + r` | Redo (from normal mode) |
-| `/searchterm` | Search for searchterm. Add `\c` for case insensitive. |
-| `n` | Next instance of searchterm |
-| `N` | Previous instance of searchterm |
-| `:%s/replaceme/withme/g` | Replace "replaceme" with "withme" in the entire file |
-| `:%s/replaceme/withme/gc` | Replace "replaceme" with "withme" and prompt |
+| `/pattern` | Search forward |
+| `?pattern` | Search backward |
+| `n` | Next match |
+| `N` | Previous match |
+| `:%s/old/new/g` | Replace all occurrences in file |
+| `:%s/old/new/gc` | Replace all with confirmation |
+| `:s/old/new/g` | Replace all in current line |
+| `u` | Undo |
+| `Ctrl+r` | Redo |
 | `:set paste` | Disable auto-indent upon paste |
 | `:set nopaste` | Re-enable auto-indent upon paste |
-| `?searchterm` | Search backwards in file for searchterm |
-| `.` | Repeat last change |
